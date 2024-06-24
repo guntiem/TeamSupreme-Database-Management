@@ -1,0 +1,37 @@
+CREATE DATABASE TeamSupreme;
+USE TeamSupreme;
+
+CREATE TABLE User (
+    UserID VARCHAR(36) PRIMARY KEY,
+    Name VARCHAR(255)
+);
+
+CREATE TABLE UserGroup (
+    GroupID VARCHAR(36) PRIMARY KEY,
+    GroupName VARCHAR(255)
+);
+
+CREATE TABLE Entity (
+    EntityID VARCHAR(36) PRIMARY KEY,
+    EntityName VARCHAR(255),
+    EntityType VARCHAR(255),
+    ModificationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    URL VARCHAR(255)
+);
+
+CREATE TABLE Party (
+GroupID INT,
+FOREIGN KEY (GroupID) references UserGroup(GroupID),
+UserID INT,
+FOREIGN KEY (UserID) references User(UserID)
+);
+
+CREATE TABLE UserPermissions (
+    UserPermID INT PRIMARY KEY AUTO_INCREMENT,
+    TypeOfPermission VARCHAR(255),
+    UserID VARCHAR(36),
+    EntityID VARCHAR(36),
+    URL VARCHAR(255),
+    FOREIGN KEY (UserID) REFERENCES User(UserID),
+    FOREIGN KEY (EntityID) REFERENCES Entity(EntityID)
+);
